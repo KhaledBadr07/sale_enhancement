@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button string="Send to approve" name="send_to_approve" type="object"/>
+                <button name="action_first_approval" type="object" string="First Approval" groups ='sale_enhancement.first_group' invisible="state!='first_approval'"/>
+                <button name="action_second_approval" type="object" string="Second Approval" groups="sale_enhancement.second_group" invisible="state!='second_approval'"/>
+                <button name="action_third_approval" type="object" string="Third Approval" groups="sale_enhancement.third_group" invisible="state!='third_approval'"/>
+            </xpath>
+            <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_confirm'][1]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='state']" position="attributes">
+                <attribute name="widget">statusbar</attribute>
+                <attribute name="statusbar_visible">draft,first_approval,second_approval,third_approval,sent,sale,done,cancel</attribute>
+            </xpath>
+             <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="so_type"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
